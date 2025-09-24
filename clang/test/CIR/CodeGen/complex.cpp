@@ -1094,6 +1094,7 @@ void imag_on_non_glvalue() {
 // OGCG: %[[A_IMAG:.*]] = load float, ptr %[[A_IMAG_PTR]], align 4
 // OGCG: store float %[[A_IMAG]], ptr %[[B_ADDR]], align 4
 
+<<<<<<< HEAD
 void atomic_complex_type() {
   _Atomic(float _Complex) a;
   float _Complex b = __c11_atomic_load(&a, __ATOMIC_RELAXED);
@@ -1132,6 +1133,8 @@ void atomic_complex_type() {
 // OGCG: store float %[[ATOMIC_TMP_REAL]], ptr %[[B_REAL_PTR]], align 4
 // OGCG: store float %[[ATOMIC_TMP_IMAG]], ptr %[[B_IMAG_PTR]], align 4
 
+=======
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 void real_on_scalar_glvalue() {
   float a;
   float b = __real__ a;
@@ -1140,8 +1143,12 @@ void real_on_scalar_glvalue() {
 // CIR: %[[A_ADDR:.*]] = cir.alloca !cir.float, !cir.ptr<!cir.float>, ["a"]
 // CIR: %[[B_ADDR:.*]] = cir.alloca !cir.float, !cir.ptr<!cir.float>, ["b", init]
 // CIR: %[[TMP_A:.*]] = cir.load{{.*}} %[[A_ADDR]] : !cir.ptr<!cir.float>, !cir.float
+<<<<<<< HEAD
 // CIR: %[[A_REAL:.*]] = cir.complex.real %[[TMP_A]] : !cir.float -> !cir.float
 // CIR: cir.store{{.*}} %[[A_REAL]], %[[B_ADDR]] : !cir.float, !cir.ptr<!cir.float>
+=======
+// CIR: cir.store{{.*}} %[[TMP_A]], %[[B_ADDR]] : !cir.float, !cir.ptr<!cir.float>
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 
 // LLVM: %[[A_ADDR:.*]] = alloca float, i64 1, align 4
 // LLVM: %[[B_ADDR:.*]] = alloca float, i64 1, align 4
@@ -1160,9 +1167,14 @@ void imag_on_scalar_glvalue() {
 
 // CIR: %[[A_ADDR:.*]] = cir.alloca !cir.float, !cir.ptr<!cir.float>, ["a"]
 // CIR: %[[B_ADDR:.*]] = cir.alloca !cir.float, !cir.ptr<!cir.float>, ["b", init]
+<<<<<<< HEAD
 // CIR: %[[TMP_A:.*]] = cir.load %[[A_ADDR]] : !cir.ptr<!cir.float>, !cir.float
 // CIR: %[[A_IMAG:.*]] = cir.complex.imag %[[TMP_A]] : !cir.float -> !cir.float
 // CIR: cir.store{{.*}} %[[A_IMAG]], %[[B_ADDR]] : !cir.float, !cir.ptr<!cir.float>
+=======
+// CIR: %[[CONST_ZERO:.*]] = cir.const #cir.fp<0.000000e+00> : !cir.float
+// CIR: cir.store{{.*}} %[[CONST_ZERO]], %[[B_ADDR]] : !cir.float, !cir.ptr<!cir.float>
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 
 // LLVM: %[[A_ADDR:.*]] = alloca float, i64 1, align 4
 // LLVM: %[[B_ADDR:.*]] = alloca float, i64 1, align 4
@@ -1180,9 +1192,14 @@ void real_on_scalar_with_type_promotion() {
 // CIR: %[[A_ADDR:.*]] = cir.alloca !cir.f16, !cir.ptr<!cir.f16>, ["a"]
 // CIR: %[[B_ADDR:.*]] = cir.alloca !cir.f16, !cir.ptr<!cir.f16>, ["b", init]
 // CIR: %[[TMP_A:.*]] = cir.load{{.*}} %[[A_ADDR]] : !cir.ptr<!cir.f16>, !cir.f16
+<<<<<<< HEAD
 // CIR: %[[TMP_A_F32:.*]] = cir.cast floating %[[TMP_A]] : !cir.f16 -> !cir.float
 // CIR: %[[A_REAL:.*]] = cir.complex.real %[[TMP_A_F32]] : !cir.float -> !cir.float
 // CIR: %[[TMP_A_F16:.*]] = cir.cast floating %[[A_REAL]] : !cir.float -> !cir.f16
+=======
+// CIR: %[[TMP_A_F32:.*]] = cir.cast(floating, %[[TMP_A]] : !cir.f16), !cir.float
+// CIR: %[[TMP_A_F16:.*]] = cir.cast(floating, %[[TMP_A_F32]] : !cir.float), !cir.f16
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 // CIR: cir.store{{.*}} %[[TMP_A_F16]], %[[B_ADDR]] : !cir.f16, !cir.ptr<!cir.f16>
 
 // LLVM: %[[A_ADDR:.*]] = alloca half, i64 1, align 2
@@ -1206,10 +1223,16 @@ void imag_on_scalar_with_type_promotion() {
 
 // CIR: %[[A_ADDR:.*]] = cir.alloca !cir.f16, !cir.ptr<!cir.f16>, ["a"]
 // CIR: %[[B_ADDR:.*]] = cir.alloca !cir.f16, !cir.ptr<!cir.f16>, ["b", init]
+<<<<<<< HEAD
 // CIR: %[[TMP_A:.*]] = cir.load %[[A_ADDR]] : !cir.ptr<!cir.f16>, !cir.f16
 // CIR: %[[A_IMAG:.*]] = cir.complex.imag %[[TMP_A]] : !cir.f16 -> !cir.f16
 // CIR: %[[A_IMAG_F16:.*]] = cir.cast floating %[[A_IMAG]] : !cir.f16 -> !cir.f16
 // CIR: cir.store{{.*}} %[[A_IMAG_F16]], %[[B_ADDR]] : !cir.f16, !cir.ptr<!cir.f16>
+=======
+// CIR: %[[CONST_ZERO:.*]] = cir.const #cir.fp<0.000000e+00> : !cir.float
+// CIR: %[[CONST_ZERO_F16:.*]] = cir.cast(floating, %[[CONST_ZERO]] : !cir.float), !cir.f16
+// CIR: cir.store{{.*}} %[[CONST_ZERO_F16]], %[[B_ADDR]] : !cir.f16, !cir.ptr<!cir.f16>
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 
 // LLVM: %[[A_ADDR:.*]] = alloca half, i64 1, align 2
 // LLVM: %[[B_ADDR:.*]] = alloca half, i64 1, align 2
@@ -1227,8 +1250,13 @@ void imag_on_const_scalar() {
 // CIR: %[[A_ADDR:.*]] = cir.alloca !cir.float, !cir.ptr<!cir.float>, ["a"]
 // CIR: %[[B_ADDR:.*]] = cir.alloca !cir.float, !cir.ptr<!cir.float>, ["b", init]
 // CIR: %[[CONST_ONE:.*]] = cir.const #cir.fp<1.000000e+00> : !cir.float
+<<<<<<< HEAD
 // CIR: %[[CONST_IMAG:.*]] = cir.complex.imag %[[CONST_ONE]] : !cir.float -> !cir.float
 // CIR: cir.store{{.*}} %[[CONST_IMAG]], %[[B_ADDR]] : !cir.float, !cir.ptr<!cir.float>
+=======
+// CIR: %[[CONST_ZERO:.*]] = cir.const #cir.fp<0.000000e+00> : !cir.float
+// CIR: cir.store{{.*}} %[[CONST_ZERO]], %[[B_ADDR]] : !cir.float, !cir.ptr<!cir.float>
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 
 // LLVM: %[[A_ADDR:.*]] = alloca float, i64 1, align 4
 // LLVM: %[[B_ADDR:.*]] = alloca float, i64 1, align 4
@@ -1237,6 +1265,7 @@ void imag_on_const_scalar() {
 // OGCG: %[[A_ADDR:.*]] = alloca float, align 4
 // OGCG: %[[B_ADDR:.*]] = alloca float, align 4
 // OGCG: store float 0.000000e+00, ptr %[[B_ADDR]], align 4
+<<<<<<< HEAD
 
 void real_on_scalar_from_real_with_type_promotion() {
   _Float16 _Complex a;
@@ -1677,3 +1706,5 @@ void load_store_volatile_2() {
 // OGCG: %[[DV_IMAG_PTR:.*]] = getelementptr inbounds nuw { i32, i32 }, ptr %[[DV_ADDR]], i32 0, i32 1
 // OGCG: store volatile i32 %[[D_REAL]], ptr %[[DV_REAL_PTR]], align 4
 // OGCG: store volatile i32 %[[D_IMAG]], ptr %[[DV_IMAG_PTR]], align 4
+=======
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)

@@ -47,6 +47,7 @@ def parse_lnt(lines, aggregate=statistics.median):
         if benchmark not in results:
             results[benchmark] = {'benchmark': benchmark}
 
+<<<<<<< HEAD
         entry = results[benchmark]
         if metric not in entry:
             entry[metric] = []
@@ -60,9 +61,27 @@ def parse_lnt(lines, aggregate=statistics.median):
     return list(results.values())
 
 def plain_text_comparison(data, metric, baseline_name=None, candidate_name=None):
+=======
+def plain_text_comparison(benchmarks, baseline, candidate, baseline_name=None, candidate_name=None):
+    """
+    Create a tabulated comparison of the baseline and the candidate.
+    """
+    headers = ['Benchmark', baseline_name, candidate_name, 'Difference', '% Difference']
+    fmt = (None, '.2f', '.2f', '.2f', '.2f')
+    table = []
+    for (bm, base, cand) in zip(benchmarks, baseline, candidate):
+        diff = (cand - base) if base and cand else None
+        percent = 100 * (diff / base) if base and cand else None
+        row = [bm, base, cand, diff, percent]
+        table.append(row)
+    return tabulate.tabulate(table, headers=headers, floatfmt=fmt, numalign='right')
+
+def create_chart(benchmarks, baseline, candidate, subtitle=None, baseline_name=None, candidate_name=None):
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
     """
     Create a tabulated comparison of the baseline and the candidate for the given metric.
     """
+<<<<<<< HEAD
     data = data.replace(numpy.nan, None) # avoid NaNs in tabulate output
     headers = ['Benchmark', baseline_name, candidate_name, 'Difference', '% Difference']
     fmt = (None, '.2f', '.2f', '.2f', '.2%')
@@ -84,6 +103,16 @@ def create_chart(data, metric, subtitle=None, series_names=None):
     title = ' vs '.join(series_names)
     figure = plotly.express.bar(data, title=title, subtitle=subtitle, x='benchmark', y=series_names, barmode='group')
     figure.update_layout(xaxis_title='', yaxis_title='', legend_title='')
+=======
+    figure = plotly.graph_objects.Figure(layout={
+        'title': {
+            'text': f'{baseline_name} vs {candidate_name}',
+            'subtitle': {'text': subtitle}
+        }
+    })
+    figure.add_trace(plotly.graph_objects.Bar(x=benchmarks, y=baseline, name=baseline_name))
+    figure.add_trace(plotly.graph_objects.Bar(x=benchmarks, y=candidate, name=candidate_name))
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
     return figure
 
 def main(argv):
@@ -119,14 +148,22 @@ def main(argv):
     parser.add_argument('--open', action='store_true',
         help='Whether to automatically open the generated HTML file when finished. This option only makes sense '
              'when the output format is `chart`.')
+<<<<<<< HEAD
     parser.add_argument('--series-names', type=str, required=False,
         help='Optional comma-delimited list of names to use for the various series. By default, we use '
              'Baseline and Candidate for two input files, and CandidateN for subsequent inputs.')
+=======
+    parser.add_argument('--baseline-name', type=str, default='Baseline',
+        help='Optional name to use for the "baseline" label.')
+    parser.add_argument('--candidate-name', type=str, default='Candidate',
+        help='Optional name to use for the "candidate" label.')
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
     parser.add_argument('--subtitle', type=str, required=False,
         help='Optional subtitle to use for the chart. This can be used to help identify the contents of the chart. '
              'This option cannot be used with the plain text output.')
     args = parser.parse_args(argv)
 
+<<<<<<< HEAD
     # Validate arguments (the values admissible for various arguments depend on other
     # arguments, the number of inputs, etc)
     if args.format == 'text':
@@ -136,6 +173,13 @@ def main(argv):
             parser.error('Passing --subtitle makes no sense with --format=text')
         if args.open:
             parser.error('Passing --open makes no sense with --format=text')
+=======
+    if args.format == 'text' and args.subtitle is not None:
+        parser.error('Passing --subtitle makes no sense with --format=text')
+
+    if args.format == 'text' and args.open:
+        parser.error('Passing --open makes no sense with --format=text')
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 
     if len(args.files) != 2 and args.sort != 'benchmark':
         parser.error('Using any sort order other than `benchmark` requires exactly two input files.')
@@ -178,13 +222,24 @@ def main(argv):
         data = data.sort_values(by=f'percent')
 
     if args.format == 'chart':
+<<<<<<< HEAD
         figure = create_chart(data, args.metric, subtitle=args.subtitle, series_names=args.series_names)
+=======
+        figure = create_chart(benchmarks, baseline_series, candidate_series, subtitle=args.subtitle,
+                                                                             baseline_name=args.baseline_name,
+                                                                             candidate_name=args.candidate_name)
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
         do_open = args.output is None or args.open
         output = args.output or tempfile.NamedTemporaryFile(suffix='.html').name
         plotly.io.write_html(figure, file=output, auto_open=do_open)
     else:
+<<<<<<< HEAD
         diff = plain_text_comparison(data, args.metric, baseline_name=args.series_names[0],
                                                         candidate_name=args.series_names[1])
+=======
+        diff = plain_text_comparison(benchmarks, baseline_series, candidate_series, baseline_name=args.baseline_name,
+                                                                                    candidate_name=args.candidate_name)
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
         diff += '\n'
         if args.output is not None:
             with open(args.output, 'w') as out:

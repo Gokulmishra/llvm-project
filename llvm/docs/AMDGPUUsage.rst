@@ -16872,7 +16872,11 @@ For GFX125x:
 * Some memory operations contain a ``nv`` bit, for "non-volatile", which indicates
   memory that is not expected to change during a kernel's execution.
   This information is propagated to the cache lines for that address
+<<<<<<< HEAD
   (referred to as ``$nv``).
+=======
+  (refered to as ``$nv``).
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 
   * When ``nv=0`` reads hit dirty ``$nv=1`` data in cache, the hardware will
     writeback the data to the next level in the hierarchy and then subsequently read

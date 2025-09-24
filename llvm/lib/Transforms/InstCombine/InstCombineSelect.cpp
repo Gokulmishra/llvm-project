@@ -4805,6 +4805,7 @@ Instruction *InstCombinerImpl::visitSelectInst(SelectInst &SI) {
   }
 
   Value *MaskedLoadPtr;
+<<<<<<< HEAD
   if (match(TrueVal, m_OneUse(m_MaskedLoad(m_Value(MaskedLoadPtr),
                                            m_Specific(CondVal), m_Value()))))
     return replaceInstUsesWith(
@@ -4838,6 +4839,16 @@ Instruction *InstCombinerImpl::visitSelectInst(SelectInst &SI) {
         SI.getModule(), Intrinsic::scmp, {SI.getType(), SI.getType()});
     return CallInst::Create(Scmp, {CmpLHS, ConstantInt::get(SI.getType(), 0)});
   }
+=======
+  const APInt *MaskedLoadAlignment;
+  if (match(TrueVal, m_OneUse(m_MaskedLoad(m_Value(MaskedLoadPtr),
+                                           m_APInt(MaskedLoadAlignment),
+                                           m_Specific(CondVal), m_Value()))))
+    return replaceInstUsesWith(
+        SI, Builder.CreateMaskedLoad(TrueVal->getType(), MaskedLoadPtr,
+                                     Align(MaskedLoadAlignment->getZExtValue()),
+                                     CondVal, FalseVal));
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 
   return nullptr;
 }

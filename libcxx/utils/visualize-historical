@@ -112,21 +112,37 @@ def truncate_lines(string, n, marker=None):
     assert len(truncated) <= n, "broken post-condition"
     return '\n'.join(truncated)
 
+<<<<<<< HEAD
 def create_plot(data, metric, trendline=None, subtitle=None):
+=======
+def create_plot(data, metric, subtitle=None):
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
     """
     Create a plot object showing the evolution of each benchmark throughout the given commits for
     the given metric.
     """
+<<<<<<< HEAD
     data = data.sort_values(by=['revlist_order', 'benchmark'])
+=======
+    data = data.sort_values(by=['date', 'benchmark'])
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
     revlist = pandas.unique(data['commit']) # list of all commits in chronological order
     hover_info = {c: truncate_lines(c.show(), 30, marker='...').replace('\n', '<br>') for c in revlist}
     figure = plotly.express.scatter(data, title=f"{revlist[0].shortrev} to {revlist[-1].shortrev}",
                                           subtitle=subtitle,
+<<<<<<< HEAD
                                           x='revlist_order', y=metric,
                                           symbol='benchmark',
                                           color='benchmark',
                                           hover_name=[hover_info[c] for c in data['commit']],
                                           trendline=trendline)
+=======
+                                          x='date', y=metric,
+                                          symbol='benchmark',
+                                          color='benchmark',
+                                          hover_name=[hover_info[c] for c in data['commit']],
+                                          trendline="lowess")
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
     return figure
 
 def directory_path(string):
@@ -213,6 +229,16 @@ def main(argv):
              'Since the chart is interactive, it generally makes most sense to include all the benchmarks '
              'and to then filter them in the browser, but in some cases producing a chart with a reduced '
              'number of data series is useful.')
+<<<<<<< HEAD
+=======
+    parser.add_argument('--find-outliers', metavar='FLOAT', type=float, required=False,
+        help='Instead of building a chart, detect commits that show a large spike (more than the given relative threshold) '
+             'with the previous result and print those to standard output. This can be used to generate a list of '
+             'potential outliers that we might want to re-generate the data for. The threshold is expressed as a '
+             'floating point number, e.g. 0.25 will detect points that differ by more than 25%% from their previous '
+             'result. This option respects --filter, i.e. only benchmarks that match the filter will be analyzed for '
+             'outliers.')
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
     parser.add_argument('--subtitle', type=str, required=False,
         help='Optional subtitle for the chart. This can be used to help identify the contents of the chart.')
     parser.add_argument('--git-repo', type=directory_path, default=pathlib.Path(os.getcwd()),
@@ -258,7 +284,11 @@ def main(argv):
             raise RuntimeError(f'Filter "{args.filter}" resulted in empty data set -- nothing to plot')
 
     # Plot the data for all the required benchmarks.
+<<<<<<< HEAD
     figure = create_plot(data, args.metric, trendline=args.trendline, subtitle=args.subtitle)
+=======
+    figure = create_plot(data, args.metric, subtitle=args.subtitle)
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
     do_open = args.output is None or args.open
     output = args.output if args.output is not None else tempfile.NamedTemporaryFile(suffix='.html').name
     plotly.io.write_html(figure, file=output, auto_open=do_open)

@@ -1837,8 +1837,12 @@ bool SIGfx12CacheControl::insertWait(MachineBasicBlock::iterator &MI,
       //   level, we need to ensure all operations in this port have completed
       //   so the other SIMDs in the WG can see them. There is no ordering
       //   guarantee between the ports.
+<<<<<<< HEAD
       if (!ST.isCuModeEnabled() || ST.hasGFX1250Insts() ||
           isReleaseOrStronger(Order)) {
+=======
+      if (!ST.isCuModeEnabled() || ST.hasGFX1250Insts()) {
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
         if ((Op & SIMemOp::LOAD) != SIMemOp::NONE)
           LOADCnt |= true;
         if ((Op & SIMemOp::STORE) != SIMemOp::NONE)

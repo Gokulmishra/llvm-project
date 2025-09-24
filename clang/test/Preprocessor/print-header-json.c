@@ -22,7 +22,10 @@
 #include "system2.h"
 
 // RUN: rm %t.txt
+<<<<<<< HEAD
 // RUN: rm -rf %t
+=======
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 // RUN: env CC_PRINT_HEADERS_FORMAT=json CC_PRINT_HEADERS_FILTERING=direct-per-file CC_PRINT_HEADERS_FILE=%t.txt %clang -fsyntax-only -I %S/Inputs/print-header-json -isystem %S/Inputs/print-header-json/system -fmodules -fimplicit-module-maps -fmodules-cache-path=%t %s -o /dev/null
 // RUN: cat %t.txt | FileCheck %s --check-prefix=SUPPORTED_PERFILE_MODULES
 

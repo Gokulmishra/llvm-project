@@ -84,8 +84,16 @@ private:
                              llvm::DenseSet<size_t> &ciesWithLSDA,
                              llvm::function_ref<void(InputSection &)> fn);
 
+<<<<<<< HEAD
   CieRecord *addCie(EhSectionPiece &piece, ArrayRef<Relocation> rels);
   Defined *isFdeLive(EhSectionPiece &piece, ArrayRef<Relocation> rels);
+=======
+  template <class RelTy>
+  CieRecord *addCie(EhSectionPiece &piece, ArrayRef<RelTy> rels);
+
+  template <class RelTy>
+  Defined *isFdeLive(EhSectionPiece &piece, ArrayRef<RelTy> rels);
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 
   uint64_t getFdePc(uint8_t *buf, size_t off, uint8_t enc) const;
 

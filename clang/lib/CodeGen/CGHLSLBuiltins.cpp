@@ -475,6 +475,7 @@ Value *CodeGenFunction::EmitHLSLBuiltinExpr(unsigned BuiltinID,
     SmallVector<Value *> Args{OrderID, SpaceOp, RangeOp, IndexOp, Name};
     return Builder.CreateIntrinsic(HandleTy, IntrinsicID, Args);
   }
+<<<<<<< HEAD
   case Builtin::BI__builtin_hlsl_resource_counterhandlefromimplicitbinding: {
     Value *MainHandle = EmitScalarExpr(E->getArg(0));
     if (!CGM.getTriple().isSPIRV())
@@ -488,6 +489,8 @@ Value *CodeGenFunction::EmitHLSLBuiltinExpr(unsigned BuiltinID,
     SmallVector<Value *> Args{MainHandle, OrderID, SpaceOp};
     return Builder.CreateIntrinsic(HandleTy, IntrinsicID, Args);
   }
+=======
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
   case Builtin::BI__builtin_hlsl_resource_nonuniformindex: {
     Value *IndexOp = EmitScalarExpr(E->getArg(0));
     llvm::Type *RetTy = ConvertType(E->getType());
@@ -495,6 +498,7 @@ Value *CodeGenFunction::EmitHLSLBuiltinExpr(unsigned BuiltinID,
         RetTy, CGM.getHLSLRuntime().getNonUniformResourceIndexIntrinsic(),
         ArrayRef<Value *>{IndexOp});
   }
+<<<<<<< HEAD
   case Builtin::BI__builtin_hlsl_resource_getdimensions_x: {
     Value *Handle = EmitScalarExpr(E->getArg(0));
     LValue Dim = EmitLValue(E->getArg(1));
@@ -508,6 +512,8 @@ Value *CodeGenFunction::EmitHLSLBuiltinExpr(unsigned BuiltinID,
     LValue Stride = EmitLValue(E->getArg(1));
     return emitBufferStride(this, E->getArg(0), Stride);
   }
+=======
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
   case Builtin::BI__builtin_hlsl_all: {
     Value *Op0 = EmitScalarExpr(E->getArg(0));
     return Builder.CreateIntrinsic(

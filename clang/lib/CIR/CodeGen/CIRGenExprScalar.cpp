@@ -2298,14 +2298,20 @@ mlir::Value ScalarExprEmitter::VisitRealImag(const UnaryOperator *e,
   }
 
   if (e->getOpcode() == UO_Real) {
+<<<<<<< HEAD
     mlir::Value operand = promotionTy.isNull()
                               ? Visit(op)
                               : cgf.emitPromotedScalarExpr(op, promotionTy);
     return builder.createComplexReal(loc, operand);
+=======
+    return promotionTy.isNull() ? Visit(op)
+                                : cgf.emitPromotedScalarExpr(op, promotionTy);
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
   }
 
   // __imag on a scalar returns zero. Emit the subexpr to ensure side
   // effects are evaluated, but not the actual value.
+<<<<<<< HEAD
   mlir::Value operand;
   if (op->isGLValue()) {
     operand = cgf.emitLValue(op).getPointer();
@@ -2316,6 +2322,18 @@ mlir::Value ScalarExprEmitter::VisitRealImag(const UnaryOperator *e,
     operand = cgf.emitScalarExpr(op);
   }
   return builder.createComplexImag(loc, operand);
+=======
+  if (op->isGLValue())
+    cgf.emitLValue(op);
+  else if (!promotionTy.isNull())
+    cgf.emitPromotedScalarExpr(op, promotionTy);
+  else
+    cgf.emitScalarExpr(op);
+
+  mlir::Type valueTy =
+      cgf.convertType(promotionTy.isNull() ? e->getType() : promotionTy);
+  return builder.getNullValue(valueTy, loc);
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 }
 
 /// Return the size or alignment of the type of argument of the sizeof
