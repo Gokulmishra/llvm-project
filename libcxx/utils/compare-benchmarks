@@ -48,6 +48,7 @@ def parse_lnt(lines, aggregate=statistics.median):
             results[benchmark] = {'benchmark': benchmark}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         entry = results[benchmark]
         if metric not in entry:
             entry[metric] = []
@@ -62,6 +63,8 @@ def parse_lnt(lines, aggregate=statistics.median):
 
 def plain_text_comparison(data, metric, baseline_name=None, candidate_name=None):
 =======
+=======
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 def plain_text_comparison(benchmarks, baseline, candidate, baseline_name=None, candidate_name=None):
     """
     Create a tabulated comparison of the baseline and the candidate.
@@ -77,10 +80,14 @@ def plain_text_comparison(benchmarks, baseline, candidate, baseline_name=None, c
     return tabulate.tabulate(table, headers=headers, floatfmt=fmt, numalign='right')
 
 def create_chart(benchmarks, baseline, candidate, subtitle=None, baseline_name=None, candidate_name=None):
+<<<<<<< HEAD
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
+=======
 >>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
     """
     Create a tabulated comparison of the baseline and the candidate for the given metric.
     """
+<<<<<<< HEAD
 <<<<<<< HEAD
     data = data.replace(numpy.nan, None) # avoid NaNs in tabulate output
     headers = ['Benchmark', baseline_name, candidate_name, 'Difference', '% Difference']
@@ -104,6 +111,8 @@ def create_chart(data, metric, subtitle=None, series_names=None):
     figure = plotly.express.bar(data, title=title, subtitle=subtitle, x='benchmark', y=series_names, barmode='group')
     figure.update_layout(xaxis_title='', yaxis_title='', legend_title='')
 =======
+=======
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
     figure = plotly.graph_objects.Figure(layout={
         'title': {
             'text': f'{baseline_name} vs {candidate_name}',
@@ -112,6 +121,9 @@ def create_chart(data, metric, subtitle=None, series_names=None):
     })
     figure.add_trace(plotly.graph_objects.Bar(x=benchmarks, y=baseline, name=baseline_name))
     figure.add_trace(plotly.graph_objects.Bar(x=benchmarks, y=candidate, name=candidate_name))
+<<<<<<< HEAD
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
+=======
 >>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
     return figure
 
@@ -149,20 +161,27 @@ def main(argv):
         help='Whether to automatically open the generated HTML file when finished. This option only makes sense '
              'when the output format is `chart`.')
 <<<<<<< HEAD
+<<<<<<< HEAD
     parser.add_argument('--series-names', type=str, required=False,
         help='Optional comma-delimited list of names to use for the various series. By default, we use '
              'Baseline and Candidate for two input files, and CandidateN for subsequent inputs.')
 =======
+=======
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
     parser.add_argument('--baseline-name', type=str, default='Baseline',
         help='Optional name to use for the "baseline" label.')
     parser.add_argument('--candidate-name', type=str, default='Candidate',
         help='Optional name to use for the "candidate" label.')
+<<<<<<< HEAD
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
+=======
 >>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
     parser.add_argument('--subtitle', type=str, required=False,
         help='Optional subtitle to use for the chart. This can be used to help identify the contents of the chart. '
              'This option cannot be used with the plain text output.')
     args = parser.parse_args(argv)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     # Validate arguments (the values admissible for various arguments depend on other
     # arguments, the number of inputs, etc)
@@ -174,6 +193,8 @@ def main(argv):
         if args.open:
             parser.error('Passing --open makes no sense with --format=text')
 =======
+=======
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
     if args.format == 'text' and args.subtitle is not None:
         parser.error('Passing --subtitle makes no sense with --format=text')
 
@@ -223,7 +244,13 @@ def main(argv):
 
     if args.format == 'chart':
 <<<<<<< HEAD
+<<<<<<< HEAD
         figure = create_chart(data, args.metric, subtitle=args.subtitle, series_names=args.series_names)
+=======
+        figure = create_chart(benchmarks, baseline_series, candidate_series, subtitle=args.subtitle,
+                                                                             baseline_name=args.baseline_name,
+                                                                             candidate_name=args.candidate_name)
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 =======
         figure = create_chart(benchmarks, baseline_series, candidate_series, subtitle=args.subtitle,
                                                                              baseline_name=args.baseline_name,
@@ -234,8 +261,13 @@ def main(argv):
         plotly.io.write_html(figure, file=output, auto_open=do_open)
     else:
 <<<<<<< HEAD
+<<<<<<< HEAD
         diff = plain_text_comparison(data, args.metric, baseline_name=args.series_names[0],
                                                         candidate_name=args.series_names[1])
+=======
+        diff = plain_text_comparison(benchmarks, baseline_series, candidate_series, baseline_name=args.baseline_name,
+                                                                                    candidate_name=args.candidate_name)
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 =======
         diff = plain_text_comparison(benchmarks, baseline_series, candidate_series, baseline_name=args.baseline_name,
                                                                                     candidate_name=args.candidate_name)

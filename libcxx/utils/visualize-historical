@@ -113,7 +113,11 @@ def truncate_lines(string, n, marker=None):
     return '\n'.join(truncated)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 def create_plot(data, metric, trendline=None, subtitle=None):
+=======
+def create_plot(data, metric, subtitle=None):
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 =======
 def create_plot(data, metric, subtitle=None):
 >>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
@@ -122,7 +126,11 @@ def create_plot(data, metric, subtitle=None):
     the given metric.
     """
 <<<<<<< HEAD
+<<<<<<< HEAD
     data = data.sort_values(by=['revlist_order', 'benchmark'])
+=======
+    data = data.sort_values(by=['date', 'benchmark'])
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 =======
     data = data.sort_values(by=['date', 'benchmark'])
 >>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
@@ -131,11 +139,19 @@ def create_plot(data, metric, subtitle=None):
     figure = plotly.express.scatter(data, title=f"{revlist[0].shortrev} to {revlist[-1].shortrev}",
                                           subtitle=subtitle,
 <<<<<<< HEAD
+<<<<<<< HEAD
                                           x='revlist_order', y=metric,
                                           symbol='benchmark',
                                           color='benchmark',
                                           hover_name=[hover_info[c] for c in data['commit']],
                                           trendline=trendline)
+=======
+                                          x='date', y=metric,
+                                          symbol='benchmark',
+                                          color='benchmark',
+                                          hover_name=[hover_info[c] for c in data['commit']],
+                                          trendline="lowess")
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 =======
                                           x='date', y=metric,
                                           symbol='benchmark',
@@ -238,6 +254,9 @@ def main(argv):
              'floating point number, e.g. 0.25 will detect points that differ by more than 25%% from their previous '
              'result. This option respects --filter, i.e. only benchmarks that match the filter will be analyzed for '
              'outliers.')
+<<<<<<< HEAD
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
+=======
 >>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
     parser.add_argument('--subtitle', type=str, required=False,
         help='Optional subtitle for the chart. This can be used to help identify the contents of the chart.')
@@ -285,7 +304,11 @@ def main(argv):
 
     # Plot the data for all the required benchmarks.
 <<<<<<< HEAD
+<<<<<<< HEAD
     figure = create_plot(data, args.metric, trendline=args.trendline, subtitle=args.subtitle)
+=======
+    figure = create_plot(data, args.metric, subtitle=args.subtitle)
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 =======
     figure = create_plot(data, args.metric, subtitle=args.subtitle)
 >>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)

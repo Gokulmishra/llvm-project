@@ -27,7 +27,11 @@ define <4 x i32> @masked_load_and_zero_inactive_2(ptr %ptr, <4 x i1> %mask) {
 define <4 x i32> @masked_load_and_zero_inactive_3(ptr %ptr, <4 x i1> %mask, <4 x i32> %passthrough) {
 ; CHECK-LABEL: @masked_load_and_zero_inactive_3(
 <<<<<<< HEAD
+<<<<<<< HEAD
 ; CHECK-NEXT:    [[MASKED:%.*]] = call <4 x i32> @llvm.masked.load.v4i32.p0(ptr align 4 [[PTR:%.*]], <4 x i1> [[MASK:%.*]], <4 x i32> zeroinitializer)
+=======
+; CHECK-NEXT:    [[MASKED:%.*]] = call <4 x i32> @llvm.masked.load.v4i32.p0(ptr [[PTR:%.*]], i32 4, <4 x i1> [[MASK:%.*]], <4 x i32> zeroinitializer)
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 =======
 ; CHECK-NEXT:    [[MASKED:%.*]] = call <4 x i32> @llvm.masked.load.v4i32.p0(ptr [[PTR:%.*]], i32 4, <4 x i1> [[MASK:%.*]], <4 x i32> zeroinitializer)
 >>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
@@ -122,7 +126,11 @@ entry:
 define <vscale x 4 x float> @fold_sel_into_masked_load_scalable(ptr %loc, <vscale x 4 x i1> %mask, <vscale x 4 x float> %passthrough) {
 ; CHECK-LABEL: @fold_sel_into_masked_load_scalable(
 <<<<<<< HEAD
+<<<<<<< HEAD
 ; CHECK-NEXT:    [[SEL:%.*]] = call <vscale x 4 x float> @llvm.masked.load.nxv4f32.p0(ptr align 1 [[LOC:%.*]], <vscale x 4 x i1> [[MASK:%.*]], <vscale x 4 x float> [[PASSTHROUGH:%.*]])
+=======
+; CHECK-NEXT:    [[SEL:%.*]] = call <vscale x 4 x float> @llvm.masked.load.nxv4f32.p0(ptr [[LOC:%.*]], i32 1, <vscale x 4 x i1> [[MASK:%.*]], <vscale x 4 x float> [[PASSTHROUGH:%.*]])
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 =======
 ; CHECK-NEXT:    [[SEL:%.*]] = call <vscale x 4 x float> @llvm.masked.load.nxv4f32.p0(ptr [[LOC:%.*]], i32 1, <vscale x 4 x i1> [[MASK:%.*]], <vscale x 4 x float> [[PASSTHROUGH:%.*]])
 >>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
@@ -136,7 +144,11 @@ define <vscale x 4 x float> @fold_sel_into_masked_load_scalable(ptr %loc, <vscal
 define <vscale x 4 x float> @neg_fold_sel_into_masked_load_mask_mismatch(ptr %loc, <vscale x 4 x i1> %mask, <vscale x 4 x i1> %mask2, <vscale x 4 x float> %passthrough) {
 ; CHECK-LABEL: @neg_fold_sel_into_masked_load_mask_mismatch(
 <<<<<<< HEAD
+<<<<<<< HEAD
 ; CHECK-NEXT:    [[LOAD:%.*]] = call <vscale x 4 x float> @llvm.masked.load.nxv4f32.p0(ptr align 1 [[LOC:%.*]], <vscale x 4 x i1> [[MASK:%.*]], <vscale x 4 x float> [[PASSTHROUGH:%.*]])
+=======
+; CHECK-NEXT:    [[LOAD:%.*]] = call <vscale x 4 x float> @llvm.masked.load.nxv4f32.p0(ptr [[LOC:%.*]], i32 1, <vscale x 4 x i1> [[MASK:%.*]], <vscale x 4 x float> [[PASSTHROUGH:%.*]])
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 =======
 ; CHECK-NEXT:    [[LOAD:%.*]] = call <vscale x 4 x float> @llvm.masked.load.nxv4f32.p0(ptr [[LOC:%.*]], i32 1, <vscale x 4 x i1> [[MASK:%.*]], <vscale x 4 x float> [[PASSTHROUGH:%.*]])
 >>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
@@ -151,9 +163,15 @@ define <vscale x 4 x float> @neg_fold_sel_into_masked_load_mask_mismatch(ptr %lo
 define <vscale x 4 x float> @fold_sel_into_masked_load_scalable_one_use_check(ptr %loc1, <vscale x 4 x i1> %mask, <vscale x 4 x float> %passthrough, ptr %loc2) {
 ; CHECK-LABEL: @fold_sel_into_masked_load_scalable_one_use_check(
 <<<<<<< HEAD
+<<<<<<< HEAD
 ; CHECK-NEXT:    [[LOAD:%.*]] = call <vscale x 4 x float> @llvm.masked.load.nxv4f32.p0(ptr align 1 [[LOC1:%.*]], <vscale x 4 x i1> [[MASK:%.*]], <vscale x 4 x float> zeroinitializer)
 ; CHECK-NEXT:    [[SEL:%.*]] = select <vscale x 4 x i1> [[MASK]], <vscale x 4 x float> [[LOAD]], <vscale x 4 x float> [[PASSTHROUGH:%.*]]
 ; CHECK-NEXT:    call void @llvm.masked.store.nxv4f32.p0(<vscale x 4 x float> [[LOAD]], ptr align 1 [[LOC2:%.*]], <vscale x 4 x i1> [[MASK]])
+=======
+; CHECK-NEXT:    [[LOAD:%.*]] = call <vscale x 4 x float> @llvm.masked.load.nxv4f32.p0(ptr [[LOC:%.*]], i32 1, <vscale x 4 x i1> [[MASK:%.*]], <vscale x 4 x float> zeroinitializer)
+; CHECK-NEXT:    [[SEL:%.*]] = select <vscale x 4 x i1> [[MASK]], <vscale x 4 x float> [[LOAD]], <vscale x 4 x float> [[PASSTHROUGH:%.*]]
+; CHECK-NEXT:    call void @llvm.masked.store.nxv4f32.p0(<vscale x 4 x float> [[LOAD]], ptr [[LOC2:%.*]], i32 1, <vscale x 4 x i1> [[MASK]])
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 =======
 ; CHECK-NEXT:    [[LOAD:%.*]] = call <vscale x 4 x float> @llvm.masked.load.nxv4f32.p0(ptr [[LOC:%.*]], i32 1, <vscale x 4 x i1> [[MASK:%.*]], <vscale x 4 x float> zeroinitializer)
 ; CHECK-NEXT:    [[SEL:%.*]] = select <vscale x 4 x i1> [[MASK]], <vscale x 4 x float> [[LOAD]], <vscale x 4 x float> [[PASSTHROUGH:%.*]]

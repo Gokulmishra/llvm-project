@@ -402,9 +402,12 @@ EhFrameSection::EhFrameSection(Ctx &ctx)
 // CIE records from input object files are uniquified by their contents
 // and where their relocations point to.
 <<<<<<< HEAD
+<<<<<<< HEAD
 CieRecord *EhFrameSection::addCie(EhSectionPiece &cie,
                                   ArrayRef<Relocation> rels) {
 =======
+=======
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 template <class RelTy>
 CieRecord *EhFrameSection::addCie(EhSectionPiece &cie, ArrayRef<RelTy> rels) {
 >>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
@@ -428,9 +431,12 @@ CieRecord *EhFrameSection::addCie(EhSectionPiece &cie, ArrayRef<RelTy> rels) {
 // There is one FDE per function. Returns a non-null pointer to the function
 // symbol if the given FDE points to a live function.
 <<<<<<< HEAD
+<<<<<<< HEAD
 Defined *EhFrameSection::isFdeLive(EhSectionPiece &fde,
                                    ArrayRef<Relocation> rels) {
 =======
+=======
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 template <class RelTy>
 Defined *EhFrameSection::isFdeLive(EhSectionPiece &fde, ArrayRef<RelTy> rels) {
   auto *sec = cast<EhInputSection>(fde.sec);
@@ -463,7 +469,11 @@ template <endianness e> void EhFrameSection::addRecords(EhInputSection *sec) {
   offsetToCie.clear();
   for (EhSectionPiece &cie : sec->cies)
 <<<<<<< HEAD
+<<<<<<< HEAD
     offsetToCie[cie.inputOff] = addCie(cie, rels);
+=======
+    offsetToCie[cie.inputOff] = addCie<RelTy>(cie, rels);
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 =======
     offsetToCie[cie.inputOff] = addCie<RelTy>(cie, rels);
 >>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
@@ -496,7 +506,11 @@ void EhFrameSection::iterateFDEWithLSDAAux(
 
     // The CIE has a LSDA argument. Call fn with d's section.
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (Defined *d = isFdeLive(fde, sec.rels))
+=======
+    if (Defined *d = isFdeLive(fde, rels))
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 =======
     if (Defined *d = isFdeLive(fde, rels))
 >>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)

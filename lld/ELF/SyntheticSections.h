@@ -85,9 +85,12 @@ private:
                              llvm::function_ref<void(InputSection &)> fn);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   CieRecord *addCie(EhSectionPiece &piece, ArrayRef<Relocation> rels);
   Defined *isFdeLive(EhSectionPiece &piece, ArrayRef<Relocation> rels);
 =======
+=======
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
   template <class RelTy>
   CieRecord *addCie(EhSectionPiece &piece, ArrayRef<RelTy> rels);
 

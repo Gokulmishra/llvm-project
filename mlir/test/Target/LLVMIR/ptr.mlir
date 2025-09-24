@@ -285,8 +285,13 @@ llvm.func @ptr_add_cst() -> !ptr.ptr<#llvm.address_space<0>> {
 // CHECK-LABEL: define i64 @ptr_diff_scalar
 // CHECK-SAME: (ptr %[[PTR1:.*]], ptr %[[PTR2:.*]]) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 // CHECK-NEXT:   %[[P1INT:.*]] = ptrtoaddr ptr %[[PTR1]] to i64
 // CHECK-NEXT:   %[[P2INT:.*]] = ptrtoaddr ptr %[[PTR2]] to i64
+=======
+// CHECK-NEXT:   %[[P1INT:.*]] = ptrtoint ptr %[[PTR1]] to i64
+// CHECK-NEXT:   %[[P2INT:.*]] = ptrtoint ptr %[[PTR2]] to i64
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 =======
 // CHECK-NEXT:   %[[P1INT:.*]] = ptrtoint ptr %[[PTR1]] to i64
 // CHECK-NEXT:   %[[P2INT:.*]] = ptrtoint ptr %[[PTR2]] to i64
@@ -302,8 +307,13 @@ llvm.func @ptr_diff_scalar(%ptr1: !ptr.ptr<#llvm.address_space<0>>, %ptr2: !ptr.
 // CHECK-LABEL: define i32 @ptr_diff_scalar_i32
 // CHECK-SAME: (ptr %[[PTR1:.*]], ptr %[[PTR2:.*]]) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 // CHECK-NEXT:   %[[P1INT:.*]] = ptrtoaddr ptr %[[PTR1]] to i64
 // CHECK-NEXT:   %[[P2INT:.*]] = ptrtoaddr ptr %[[PTR2]] to i64
+=======
+// CHECK-NEXT:   %[[P1INT:.*]] = ptrtoint ptr %[[PTR1]] to i64
+// CHECK-NEXT:   %[[P2INT:.*]] = ptrtoint ptr %[[PTR2]] to i64
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 =======
 // CHECK-NEXT:   %[[P1INT:.*]] = ptrtoint ptr %[[PTR1]] to i64
 // CHECK-NEXT:   %[[P2INT:.*]] = ptrtoint ptr %[[PTR2]] to i64
@@ -320,8 +330,13 @@ llvm.func @ptr_diff_scalar_i32(%ptr1: !ptr.ptr<#llvm.address_space<0>>, %ptr2: !
 // CHECK-LABEL: define <4 x i64> @ptr_diff_vector
 // CHECK-SAME: (<4 x ptr> %[[PTRS1:.*]], <4 x ptr> %[[PTRS2:.*]]) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 // CHECK-NEXT:   %[[P1INT:.*]] = ptrtoaddr <4 x ptr> %[[PTRS1]] to <4 x i64>
 // CHECK-NEXT:   %[[P2INT:.*]] = ptrtoaddr <4 x ptr> %[[PTRS2]] to <4 x i64>
+=======
+// CHECK-NEXT:   %[[P1INT:.*]] = ptrtoint <4 x ptr> %[[PTRS1]] to <4 x i64>
+// CHECK-NEXT:   %[[P2INT:.*]] = ptrtoint <4 x ptr> %[[PTRS2]] to <4 x i64>
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 =======
 // CHECK-NEXT:   %[[P1INT:.*]] = ptrtoint <4 x ptr> %[[PTRS1]] to <4 x i64>
 // CHECK-NEXT:   %[[P2INT:.*]] = ptrtoint <4 x ptr> %[[PTRS2]] to <4 x i64>
@@ -337,8 +352,13 @@ llvm.func @ptr_diff_vector(%ptrs1: vector<4x!ptr.ptr<#llvm.address_space<0>>>, %
 // CHECK-LABEL: define <8 x i32> @ptr_diff_vector_i32
 // CHECK-SAME: (<8 x ptr> %[[PTRS1:.*]], <8 x ptr> %[[PTRS2:.*]]) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 // CHECK-NEXT:   %[[P1INT:.*]] = ptrtoaddr <8 x ptr> %[[PTRS1]] to <8 x i64>
 // CHECK-NEXT:   %[[P2INT:.*]] = ptrtoaddr <8 x ptr> %[[PTRS2]] to <8 x i64>
+=======
+// CHECK-NEXT:   %[[P1INT:.*]] = ptrtoint <8 x ptr> %[[PTRS1]] to <8 x i64>
+// CHECK-NEXT:   %[[P2INT:.*]] = ptrtoint <8 x ptr> %[[PTRS2]] to <8 x i64>
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 =======
 // CHECK-NEXT:   %[[P1INT:.*]] = ptrtoint <8 x ptr> %[[PTRS1]] to <8 x i64>
 // CHECK-NEXT:   %[[P2INT:.*]] = ptrtoint <8 x ptr> %[[PTRS2]] to <8 x i64>
@@ -365,8 +385,13 @@ llvm.func @ptr_diff_with_constants() -> i64 {
 // CHECK-LABEL: define i64 @ptr_diff_with_flags_nsw
 // CHECK-SAME: (ptr %[[PTR1:.*]], ptr %[[PTR2:.*]]) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 // CHECK-NEXT:   %[[P1INT:.*]] = ptrtoaddr ptr %[[PTR1]] to i64
 // CHECK-NEXT:   %[[P2INT:.*]] = ptrtoaddr ptr %[[PTR2]] to i64
+=======
+// CHECK-NEXT:   %[[P1INT:.*]] = ptrtoint ptr %[[PTR1]] to i64
+// CHECK-NEXT:   %[[P2INT:.*]] = ptrtoint ptr %[[PTR2]] to i64
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 =======
 // CHECK-NEXT:   %[[P1INT:.*]] = ptrtoint ptr %[[PTR1]] to i64
 // CHECK-NEXT:   %[[P2INT:.*]] = ptrtoint ptr %[[PTR2]] to i64
@@ -382,8 +407,13 @@ llvm.func @ptr_diff_with_flags_nsw(%ptr1: !ptr.ptr<#llvm.address_space<0>>, %ptr
 // CHECK-LABEL: define i64 @ptr_diff_with_flags_nuw
 // CHECK-SAME: (ptr %[[PTR1:.*]], ptr %[[PTR2:.*]]) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 // CHECK-NEXT:   %[[P1INT:.*]] = ptrtoaddr ptr %[[PTR1]] to i64
 // CHECK-NEXT:   %[[P2INT:.*]] = ptrtoaddr ptr %[[PTR2]] to i64
+=======
+// CHECK-NEXT:   %[[P1INT:.*]] = ptrtoint ptr %[[PTR1]] to i64
+// CHECK-NEXT:   %[[P2INT:.*]] = ptrtoint ptr %[[PTR2]] to i64
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 =======
 // CHECK-NEXT:   %[[P1INT:.*]] = ptrtoint ptr %[[PTR1]] to i64
 // CHECK-NEXT:   %[[P2INT:.*]] = ptrtoint ptr %[[PTR2]] to i64
@@ -399,8 +429,13 @@ llvm.func @ptr_diff_with_flags_nuw(%ptr1: !ptr.ptr<#llvm.address_space<0>>, %ptr
 // CHECK-LABEL: define i64 @ptr_diff_with_flags_nsw_nuw
 // CHECK-SAME: (ptr %[[PTR1:.*]], ptr %[[PTR2:.*]]) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 // CHECK-NEXT:   %[[P1INT:.*]] = ptrtoaddr ptr %[[PTR1]] to i64
 // CHECK-NEXT:   %[[P2INT:.*]] = ptrtoaddr ptr %[[PTR2]] to i64
+=======
+// CHECK-NEXT:   %[[P1INT:.*]] = ptrtoint ptr %[[PTR1]] to i64
+// CHECK-NEXT:   %[[P2INT:.*]] = ptrtoint ptr %[[PTR2]] to i64
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 =======
 // CHECK-NEXT:   %[[P1INT:.*]] = ptrtoint ptr %[[PTR1]] to i64
 // CHECK-NEXT:   %[[P2INT:.*]] = ptrtoint ptr %[[PTR2]] to i64

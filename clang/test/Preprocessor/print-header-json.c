@@ -23,7 +23,10 @@
 
 // RUN: rm %t.txt
 <<<<<<< HEAD
+<<<<<<< HEAD
 // RUN: rm -rf %t
+=======
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 =======
 >>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 // RUN: env CC_PRINT_HEADERS_FORMAT=json CC_PRINT_HEADERS_FILTERING=direct-per-file CC_PRINT_HEADERS_FILE=%t.txt %clang -fsyntax-only -I %S/Inputs/print-header-json -isystem %S/Inputs/print-header-json/system -fmodules -fimplicit-module-maps -fmodules-cache-path=%t %s -o /dev/null

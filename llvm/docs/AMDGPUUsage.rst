@@ -16913,7 +16913,11 @@ For GFX125x:
   memory that is not expected to change during a kernel's execution.
   This information is propagated to the cache lines for that address
 <<<<<<< HEAD
+<<<<<<< HEAD
   (referred to as ``$nv``).
+=======
+  (refered to as ``$nv``).
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 =======
   (refered to as ``$nv``).
 >>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)

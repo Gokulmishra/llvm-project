@@ -2299,6 +2299,7 @@ mlir::Value ScalarExprEmitter::VisitRealImag(const UnaryOperator *e,
 
   if (e->getOpcode() == UO_Real) {
 <<<<<<< HEAD
+<<<<<<< HEAD
     mlir::Value operand = promotionTy.isNull()
                               ? Visit(op)
                               : cgf.emitPromotedScalarExpr(op, promotionTy);
@@ -2307,10 +2308,15 @@ mlir::Value ScalarExprEmitter::VisitRealImag(const UnaryOperator *e,
     return promotionTy.isNull() ? Visit(op)
                                 : cgf.emitPromotedScalarExpr(op, promotionTy);
 >>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
+=======
+    return promotionTy.isNull() ? Visit(op)
+                                : cgf.emitPromotedScalarExpr(op, promotionTy);
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
   }
 
   // __imag on a scalar returns zero. Emit the subexpr to ensure side
   // effects are evaluated, but not the actual value.
+<<<<<<< HEAD
 <<<<<<< HEAD
   mlir::Value operand;
   if (op->isGLValue()) {
@@ -2323,6 +2329,8 @@ mlir::Value ScalarExprEmitter::VisitRealImag(const UnaryOperator *e,
   }
   return builder.createComplexImag(loc, operand);
 =======
+=======
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
   if (op->isGLValue())
     cgf.emitLValue(op);
   else if (!promotionTy.isNull())
@@ -2333,6 +2341,9 @@ mlir::Value ScalarExprEmitter::VisitRealImag(const UnaryOperator *e,
   mlir::Type valueTy =
       cgf.convertType(promotionTy.isNull() ? e->getType() : promotionTy);
   return builder.getNullValue(valueTy, loc);
+<<<<<<< HEAD
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
+=======
 >>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 }
 
