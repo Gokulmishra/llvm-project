@@ -250,6 +250,7 @@ LogicalResult CpAsyncBulkGlobalToSharedClusterOp::verify() {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static LogicalResult verifyMBarrierArriveLikeOp(Operation *op, Value addr,
                                                 NVVM::MemScopeKind scope,
                                                 Value retVal = nullptr) {
@@ -283,6 +284,8 @@ LogicalResult MBarrierCompleteTxOp::verify() {
   return verifyMBarrierArriveLikeOp(getOperation(), getAddr(), getScope());
 }
 
+=======
+>>>>>>> 95aa70cf209a ([MLIR][NVVM] Add support for shared::cta destination (#168056))
 =======
 >>>>>>> 95aa70cf209a ([MLIR][NVVM] Add support for shared::cta destination (#168056))
 LogicalResult ConvertFloatToTF32Op::verify() {
