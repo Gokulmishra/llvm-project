@@ -1,10 +1,6 @@
 # Ignore inactive directories (no activity in last 2 months)
-compiler-rt/
-compiler-rt/docs/
-compiler-rt/unittests/
-compiler-rt/test/
-compiler-rt/utils/
-compiler-rt/www/
+compiler-rt/*
+!compiler-rt/lib/orc/
 clang/bindings/
 clang/cmake/
 clang/docs/
