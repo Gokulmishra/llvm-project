@@ -284,19 +284,7 @@ int COFFPlatformRuntimeState::dlupdate(void *DSOHandle) {
   return 0;
 }
 
-int COFFPlatformRuntimeState::dlupdate(void *DSOHandle) {
-  ORC_RT_DEBUG({
-    std::string S;
-    printdbg("COFFPlatform::dlupdate(%p) (%s)\n", DSOHandle, S.c_str());
-  });
-  std::lock_guard<std::recursive_mutex> Lock(JDStatesMutex);
-  if (auto Err = dlupdateImpl(DSOHandle)) {
-    // FIXME: Make dlerror thread safe.
-    DLFcnError = toString(std::move(Err));
-    return -1;
-  }
-  return 0;
-}
+
 
 int COFFPlatformRuntimeState::dlclose(void *DSOHandle) {
   ORC_RT_DEBUG({
