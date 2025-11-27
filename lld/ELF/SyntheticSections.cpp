@@ -401,8 +401,13 @@ EhFrameSection::EhFrameSection(Ctx &ctx)
 // Search for an existing CIE record or create a new one.
 // CIE records from input object files are uniquified by their contents
 // and where their relocations point to.
+<<<<<<< HEAD
 CieRecord *EhFrameSection::addCie(EhSectionPiece &cie,
                                   ArrayRef<Relocation> rels) {
+=======
+template <class RelTy>
+CieRecord *EhFrameSection::addCie(EhSectionPiece &cie, ArrayRef<RelTy> rels) {
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
   Symbol *personality = nullptr;
   unsigned firstRelI = cie.firstRelocation;
   if (firstRelI != (unsigned)-1)
@@ -422,8 +427,16 @@ CieRecord *EhFrameSection::addCie(EhSectionPiece &cie,
 
 // There is one FDE per function. Returns a non-null pointer to the function
 // symbol if the given FDE points to a live function.
+<<<<<<< HEAD
 Defined *EhFrameSection::isFdeLive(EhSectionPiece &fde,
                                    ArrayRef<Relocation> rels) {
+=======
+template <class RelTy>
+Defined *EhFrameSection::isFdeLive(EhSectionPiece &fde, ArrayRef<RelTy> rels) {
+  auto *sec = cast<EhInputSection>(fde.sec);
+  unsigned firstRelI = fde.firstRelocation;
+
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
   // An FDE should point to some function because FDEs are to describe
   // functions. That's however not always the case due to an issue of
   // ld.gold with -r. ld.gold may discard only functions and leave their
@@ -449,7 +462,11 @@ template <endianness e> void EhFrameSection::addRecords(EhInputSection *sec) {
   auto rels = sec->rels;
   offsetToCie.clear();
   for (EhSectionPiece &cie : sec->cies)
+<<<<<<< HEAD
     offsetToCie[cie.inputOff] = addCie(cie, rels);
+=======
+    offsetToCie[cie.inputOff] = addCie<RelTy>(cie, rels);
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
   for (EhSectionPiece &fde : sec->fdes) {
     uint32_t id = endian::read32<e>(fde.data().data() + 4);
     CieRecord *rec = offsetToCie[fde.inputOff + 4 - id];
@@ -478,7 +495,11 @@ void EhFrameSection::iterateFDEWithLSDAAux(
       continue;
 
     // The CIE has a LSDA argument. Call fn with d's section.
+<<<<<<< HEAD
     if (Defined *d = isFdeLive(fde, sec.rels))
+=======
+    if (Defined *d = isFdeLive(fde, rels))
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
       if (auto *s = dyn_cast_or_null<InputSection>(d->section))
         fn(*s);
   }
@@ -2747,9 +2768,9 @@ RelroPaddingSection::RelroPaddingSection(Ctx &ctx)
     : SyntheticSection(ctx, ".relro_padding", SHT_NOBITS, SHF_ALLOC | SHF_WRITE,
                        1) {}
 
-PaddingSection::PaddingSection(Ctx &ctx, uint64_t size, OutputSection *parent)
-    : SyntheticSection(ctx, ".padding", SHT_PROGBITS, SHF_ALLOC, 1),
-      size(size) {
+PaddingSection::PaddingSection(Ctx &ctx, uint64_t amount, OutputSection *parent)
+    : SyntheticSection(ctx, ".padding", SHT_PROGBITS, SHF_ALLOC, 1) {
+  size = amount;
   this->parent = parent;
 }
 
@@ -3784,9 +3805,10 @@ void VersionTableSection::writeTo(uint8_t *buf) {
   buf += 2;
   for (const SymbolTableEntry &s : getPartition(ctx).dynSymTab->getSymbols()) {
     // For an unextracted lazy symbol (undefined weak), it must have been
-    // converted to Undefined and have VER_NDX_GLOBAL version here.
+    // converted to Undefined.
     assert(!s.sym->isLazy());
-    write16(ctx, buf, s.sym->versionId);
+    // Undefined symbols should use index 0 when unversioned.
+    write16(ctx, buf, s.sym->isUndefined() ? 0 : s.sym->versionId);
     buf += 2;
   }
 }

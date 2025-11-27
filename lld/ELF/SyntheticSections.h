@@ -78,16 +78,22 @@ private:
   // allocating one for each EhInputSection.
   llvm::DenseMap<size_t, CieRecord *> offsetToCie;
 
-  uint64_t size = 0;
-
   template <llvm::endianness E> void addRecords(EhInputSection *s);
   template <class ELFT>
   void iterateFDEWithLSDAAux(EhInputSection &sec,
                              llvm::DenseSet<size_t> &ciesWithLSDA,
                              llvm::function_ref<void(InputSection &)> fn);
 
+<<<<<<< HEAD
   CieRecord *addCie(EhSectionPiece &piece, ArrayRef<Relocation> rels);
   Defined *isFdeLive(EhSectionPiece &piece, ArrayRef<Relocation> rels);
+=======
+  template <class RelTy>
+  CieRecord *addCie(EhSectionPiece &piece, ArrayRef<RelTy> rels);
+
+  template <class RelTy>
+  Defined *isFdeLive(EhSectionPiece &piece, ArrayRef<RelTy> rels);
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 
   uint64_t getFdePc(uint8_t *buf, size_t off, uint8_t enc) const;
 
@@ -127,7 +133,6 @@ public:
 protected:
   size_t numEntries = 0;
   uint32_t tlsIndexOff = -1;
-  uint64_t size = 0;
   struct AuthEntryInfo {
     size_t offset;
     bool isSymbolFunc;
@@ -182,7 +187,6 @@ public:
   static bool classof(const SectionBase *s) {
     return isa<SyntheticSection>(s) && cast<SyntheticSection>(s)->bss;
   }
-  uint64_t size;
 };
 
 class MipsGotSection final : public SyntheticSection {
@@ -312,8 +316,6 @@ private:
   // Number of "Header" entries.
   static const unsigned headerEntriesNum = 2;
 
-  uint64_t size = 0;
-
   // Symbol and addend.
   using GotEntry = std::pair<Symbol *, int64_t>;
 
@@ -407,8 +409,6 @@ public:
 private:
   const bool dynamic;
 
-  uint64_t size = 0;
-
   llvm::DenseMap<llvm::CachedHashStringRef, unsigned> stringMap;
   SmallVector<StringRef, 0> strings;
 };
@@ -475,7 +475,6 @@ public:
 
 private:
   std::vector<std::pair<int32_t, uint64_t>> computeContents();
-  uint64_t size = 0;
 };
 
 class RelocationBaseSection : public SyntheticSection {
@@ -780,10 +779,8 @@ public:
 };
 
 class PaddingSection final : public SyntheticSection {
-  uint64_t size;
-
 public:
-  PaddingSection(Ctx &ctx, uint64_t size, OutputSection *parent);
+  PaddingSection(Ctx &ctx, uint64_t amount, OutputSection *parent);
   size_t getSize() const override { return size; }
   void writeTo(uint8_t *buf) override;
 };

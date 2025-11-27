@@ -2,7 +2,11 @@
 
 # ulimit does not work on non-POSIX platforms.
 # These tests are specific to options that Darwin does not support.
+<<<<<<< HEAD
 # UNSUPPORTED: system-windows, system-cygwin, system-darwin, system-aix, system-solaris
+=======
+# UNSUPPORTED: system-windows, system-darwin, system-aix
+>>>>>>> c9042b8fa9e7 (Merge llvm/main into amd-debug)
 
 # RUN: not %{lit} -v %{inputs}/shtest-ulimit-nondarwin | FileCheck %s
 

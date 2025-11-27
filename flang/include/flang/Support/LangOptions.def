@@ -62,7 +62,10 @@ LANGOPT(OpenMPNoNestedParallelism, 1, 0)
 LANGOPT(OpenMPSimd, 1, false)
 /// Enable fast MOD operations for REAL
 LANGOPT(FastRealMod, 1, false)
+<<<<<<< HEAD
 LANGOPT(AllowThreadprivateEquivalence, 1, false)
+=======
+>>>>>>> main
 LANGOPT(VScaleMin, 32, 0)  ///< Minimum vscale range value
 LANGOPT(VScaleMax, 32, 0)  ///< Maximum vscale range value
 

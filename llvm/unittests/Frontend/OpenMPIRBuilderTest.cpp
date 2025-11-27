@@ -5323,10 +5323,12 @@ TEST_F(OpenMPIRBuilderTest, CreateReductions) {
   OpenMPIRBuilder::ReductionInfo ReductionInfos[] = {
       {SumType, SumReduced, SumPrivatized,
        /*EvaluationKind=*/OpenMPIRBuilder::EvalKind::Scalar, sumReduction,
-       /*ReductionGenClang=*/nullptr, sumAtomicReduction},
+       /*ReductionGenClang=*/nullptr, sumAtomicReduction,
+       /*DataPtrPtrGen=*/nullptr},
       {XorType, XorReduced, XorPrivatized,
        /*EvaluationKind=*/OpenMPIRBuilder::EvalKind::Scalar, xorReduction,
-       /*ReductionGenClang=*/nullptr, xorAtomicReduction}};
+       /*ReductionGenClang=*/nullptr, xorAtomicReduction,
+       /*DataPtrPtrGen=*/nullptr}};
   OMPBuilder.Config.setIsGPU(false);
 
   bool ReduceVariableByRef[] = {false, false};
@@ -5558,10 +5560,11 @@ TEST_F(OpenMPIRBuilderTest, ScanReduction) {
 
   EXPECT_EQ(ScanLoop->getAfter(), Builder.GetInsertBlock());
   EXPECT_EQ(NumBodiesGenerated, 2U);
-  SmallVector<OpenMPIRBuilder::ReductionInfo> ReductionInfos = {
+  SmallVector<OpenMPIRBuilder::ReductionInfo, 2> ReductionInfos = {
       {Builder.getFloatTy(), OrigVar, ScanVar,
        /*EvaluationKind=*/OpenMPIRBuilder::EvalKind::Scalar, sumReduction,
-       /*ReductionGenClang=*/nullptr, sumAtomicReduction}};
+       /*ReductionGenClang=*/nullptr, sumAtomicReduction,
+       /*DataPtrPtrGen=*/nullptr}};
   OpenMPIRBuilder::LocationDescription RedLoc({InputLoop->getAfterIP(), DL});
   llvm::BasicBlock *Cont = splitBB(Builder, false, "omp.scan.loop.cont");
   ASSERT_EXPECTED_INIT(
@@ -5734,7 +5737,8 @@ TEST_F(OpenMPIRBuilderTest, CreateTwoReductions) {
           FirstBodyIP, FirstBodyAllocaIP,
           {{SumType, SumReduced, SumPrivatized,
             /*EvaluationKind=*/OpenMPIRBuilder::EvalKind::Scalar, sumReduction,
-            /*ReductionGenClang=*/nullptr, sumAtomicReduction}},
+            /*ReductionGenClang=*/nullptr, sumAtomicReduction,
+            /*DataPtrPtrGen=*/nullptr}},
           ReduceVariableByRef),
       Succeeded());
   ASSERT_THAT_EXPECTED(
@@ -5742,7 +5746,8 @@ TEST_F(OpenMPIRBuilderTest, CreateTwoReductions) {
           SecondBodyIP, SecondBodyAllocaIP,
           {{XorType, XorReduced, XorPrivatized,
             /*EvaluationKind=*/OpenMPIRBuilder::EvalKind::Scalar, xorReduction,
-            /*ReductionGenClang=*/nullptr, xorAtomicReduction}},
+            /*ReductionGenClang=*/nullptr, xorAtomicReduction,
+            /*DataPtrPtrGen=*/nullptr}},
           ReduceVariableByRef),
       Succeeded());
 
